@@ -8,13 +8,13 @@ import { clerkMiddleware } from '@clerk/express'
 import userRouter from "./routes/userRoutes.js"
 import postRouter from "./routes/postRoutes.js"
 import storyRoute from "./routes/storyRoutes.js"
-import messageRouter from "./routes/MessageRoutes.js"
+import messageRouter from "./routes/messageRoutes.js"
 
 const app = express()
 
 await connectDB()
 
-// const PORT = process.env.PORT || 4001
+const PORT = process.env.PORT || 4001
 
 app.use(express.json())
 app.use(cors())
@@ -31,8 +31,7 @@ app.use("/api/post", postRouter)
 app.use("/api/story", storyRoute)
 app.use("/api/message", messageRouter)
 
-// app.listen(PORT, ()=>{
-//     console.log(`Server is running on port ${PORT}`)
-// })
+app.listen(PORT, ()=>{
+    console.log(`Server is running on port ${PORT}`)
+})
 
-export default app
