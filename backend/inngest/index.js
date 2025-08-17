@@ -76,7 +76,7 @@ const deleteStory = inngest.createFunction(
         const in24Hrs = new Date(Date.now() + 24 * 60 * 60 * 1000)
 
         await step.sleepUntil("wait-for-24-hours", in24Hrs)
-        await step.run("delete=story", async () => {
+        await step.run("delete-story", async () => {
             await Story.findByIdAndDelete(storyId)
             return {message: "Story deleted"}
         })
