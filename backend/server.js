@@ -10,7 +10,6 @@ import postRouter from "./routes/postRoutes.js"
 import storyRoute from "./routes/storyRoutes.js"
 import messageRouter from "./routes/MessageRoutes.js"
 
-
 const app = express()
 
 await connectDB()
