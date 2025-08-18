@@ -1,19 +1,51 @@
-import {BadgeCheck, Heart, MessageCircle, Share2} from "lucide-react"
+import {BadgeCheck, Bookmark, Heart, MessageCircle, Save, Share2, Trash} from "lucide-react"
 import moment from "moment"
 import { dummyUserData } from "../assets/assets"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { useAuth } from "@clerk/clerk-react"
+import { api } from "../api/axios"
+import toast from "react-hot-toast"
 
 function PostCard({post}) {
 
+    const {getToken} = useAuth()
+
     const postWithHashTags = post.content.replace(/(#\w+)/g,'<span class= "text-indigo-600 cursor-pointer">$1</span>')
-    const currentUser = dummyUserData
+    const currentUser = useSelector( (state)=> state.user.value)
 
     const [likes, setLikes] = useState(post.likes_count)
     const navigate = useNavigate()
 
     const handleLike =async ()=>{
+        try {
+            const {data} = await api.post("/api/post/like", {postId: post._id}, {headers: {Authorization: `Bearer ${await getToken()}`}})
 
+            if(data.success){
+                toast.success(data.message)
+                setLikes( prev => {
+
+                    if(prev.includes(currentUser._id)){
+                        return prev.filter(id => id !== currentUser._id)
+                    }else{
+                        return [...prev, currentUser._id]
+                    }
+                })
+            }else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    const handleDelete = async () => {
+        
+    }
+
+    const handleSave = async () => {
+        
     }
     
   return (
@@ -65,6 +97,20 @@ function PostCard({post}) {
                 <Share2 className="w-4 h-4"/>
                 <span>{7}</span>
             </div>
+
+
+            {/* Shows only if created by userId that is login */}
+            <div className='flex items-center gap-1 cursor-pointer ml-105'>
+                <Trash className="w-4 h-4" onClick={handleDelete}/>
+                
+            </div>
+
+            <div className='flex items-center gap-1 cursor-pointer ml-4'>
+                <Bookmark className="w-4 h-4" onClick={handleSave}/>
+                
+            </div>
+
+            
 
         </div>
 

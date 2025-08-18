@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
 import { dummyUserData } from '../assets/assets'
 import { Pencil } from 'lucide-react'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateUser } from '../features/user/userSlice.js'
+import { useAuth } from '@clerk/clerk-react'
+import toast from 'react-hot-toast'
 
 function ProfileModal({setShowEdit}) {
 
-    const user = dummyUserData
+    const {getToken} = useAuth()
+
+    const dispatch = useDispatch()
+
+    const user = useSelector( (state)=> state.user.value)
     const [editForm, setEditForm] = useState({
         username: user.username,
         bio: user.bio,
@@ -16,6 +24,26 @@ function ProfileModal({setShowEdit}) {
 
     const handleSaveProfile = async (e) => {
         e.preventDefault()
+        try {
+
+            const userData = new FormData()
+            const {username, bio, location, profile_picture, cover_photo, full_name} = editForm
+
+            userData.append("username", username)
+            userData.append("bio", bio)
+            userData.append("location", location)
+            userData.append("full_name", full_name)
+            profile_picture && userData.append("profile", profile_picture)
+            cover_photo && userData.append("cover", cover_photo)
+
+            const token = await getToken()
+            dispatch(updateUser({userData, token}))
+
+            setShowEdit(false)
+
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
 
   return (
@@ -23,7 +51,10 @@ function ProfileModal({setShowEdit}) {
         <div className="max-w-2xl sm:py-6 mx-auto">
             <div className='bg-white rounded-lg shadow p-6'>
                 <h1 className='text-2xl font-bold text-gray-900 mb-6'>Edit Profile</h1>
-                <form className='space-y-4'>
+
+                <form className='space-y-4' onSubmit={(e)=> { toast.promise(
+                    handleSaveProfile(e), {loading: "Saving...", error: "Failed to update profile"}
+                )}}>
                     {/* Profile picture */}
                     <div className='flex flex-col items-start gap-3'>
                         <label htmlFor="profile_picture" className='block text-sm font-medium text-gray-700 mb-1'> Profile Picture
@@ -55,25 +86,25 @@ function ProfileModal({setShowEdit}) {
 
                     {/* Name */}
                     <div>
-                        <label className="'block text-sm font-medium text-gray-700 mb-1">Name</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
                         <input type="text" className='w-full p-3 border border-gray-200 rounded-lg ' placeholder='Please enter your name' onChange={(e)=> setEditForm({...editForm, full_name: e.target.value})} value={editForm.full_name}/>
                     </div>
 
                     {/* Username */}
                     <div>
-                        <label className="'block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
                         <input type="text" className='w-full p-3 border border-gray-200 rounded-lg ' placeholder='Please enter your username' onChange={(e)=> setEditForm({...editForm, username: e.target.value})} value={editForm.username}/>
                     </div>
 
                     {/* Bio */}
                     <div>
-                        <label className="'block text-sm font-medium text-gray-700 mb-1">Bio</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
                         <textarea rows={3} className='w-full p-3 border border-gray-200 rounded-lg ' placeholder='Please enter your bio' onChange={(e)=> setEditForm({...editForm, bio: e.target.value})} value={editForm.bio}/>
                     </div>
 
                     {/* Location */}
                     <div>
-                        <label className="'block text-sm font-medium text-gray-700 mb-1">Location</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
                         <input type="text" className='w-full p-3 border border-gray-200 rounded-lg ' placeholder='Please enter your location' onChange={(e)=> setEditForm({...editForm, location: e.target.value})} value={editForm.location}/>
                     </div>
 
@@ -82,7 +113,7 @@ function ProfileModal({setShowEdit}) {
 
                         <button onClick={()=> setShowEdit(false)} type='button' className='px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer'>Cancel</button>
 
-                        <button type='submit' className='px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-1g hover:from-indigo-600 hover:to-purple-700 transition cursor-pointer'>Save Changes</button> 
+                        <button type='submit' className='px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg hover:from-indigo-600 hover:to-purple-700 transition cursor-pointer'>Save Changes</button> 
 
                     </div>
 
