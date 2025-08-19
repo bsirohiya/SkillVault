@@ -60,11 +60,11 @@ function StoriesBar() {
 
                         <p className="absolute top-18 left-3 text-white/60 text-sm truncate max-w-24">{story.content}</p>
 
-                        <p className="text-white absolute bottom-1 right-2 2-10 text-xs">{moment(story.createdAt).fromNow()}</p>
+                        <p className="text-white absolute bottom-1 right-2 z-10 text-xs">{moment(story.createdAt).fromNow()}</p>
 
                         {
                             story.media_type !== "text" && (
-                                <div className="absolute inset-0 z-10 rounded-lg bg-black overflow-hidden">
+                                <div className="absolute inset-0 rounded-lg  overflow-hidden">
                                      {
                                         story.media_type === "image" ? 
                                         <img src={story.media_url} alt="" 

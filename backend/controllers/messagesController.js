@@ -1,11 +1,9 @@
-import { connections } from "mongoose";
 import fs from "fs"
 import imagekit from "../configs/imageKit.js";
 import { Message } from "../models/Messages.js";
-import { log } from "console";
 
 // Create an empty onject to store server side Event connection
-const Connnections = {}
+const connections = {}
 
 // Controller function for SSE ednpoint
 export const sseContoller = (req, res)=>{
@@ -115,7 +113,7 @@ export const getChatMessages = async (req, res) => {
 export const getUSerRecentMessage = async (req, res) => {
     try {
         const {userId} = req.auth()
-        const messages = await Message.find({to_user_id: userId}.populate("from_user_id to_user_id")).sort({createdAt: -1})
+        const messages = await Message.find({to_user_id: userId}).populate("from_user_id to_user_id").sort({createdAt: -1})
 
         res.json({success: true, messages})
     } catch (error) {
