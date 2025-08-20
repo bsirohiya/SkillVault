@@ -13,17 +13,19 @@ function Sidebar({sidebarOpen, setSidebarOpen}) {
     const {signOut} = useClerk()
     
   return (
-    <div  className={`w-60 x1:w-72 bg-white border-r border-gray-200 flex flex-col items-start max-sm:absolute top-e bottom-0 z-20 pt-2.5 ${sidebarOpen ? 'translate-x-e' : 'max-sm:-translate-x-full'} transition-all duration-300 ease-in-out`}>
+    <div className={`w-60 xl:w-65 bg-white border-r border-gray-200 flex flex-col items-center max-sm:absolute top-4 bottom-0 z-20 pt-2.5 mt-2.5 ${sidebarOpen ? 'translate-x-4' : 'max-sm:-translate-x-full'} transition-all duration-300 ease-in-out`}>
         
         <div className="w-full flex justify-center">
-            <img onClick= {()=>navigate("/")} src={assets.logo} alt="" className='w-26 m1-7 my-2 cursor-pointer mb-3'/>
+            <img onClick= {()=>navigate("/")} src={assets.logo} alt="" className="w-40 max-w-[150px] mb-2.5 ml-2.5 cursor-pointer object-contain" />
         </div>
 
         <hr className='border-t border-gray-200 w-full mb-8'/>
 
        <MenuItems setSidebarOpen={setSidebarOpen}/>
 
-        <Link to='/create-post' className='flex items-center justify-center gap-2 py-2.5 px-4 mt-6 mx-6 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-700 hover:to-purple-800 active:scale-95 transition text-white cursor-pointer'>
+        <Link to='/create-post' className='flex items-center justify-center gap-2 py-2.5 px-4 mt-6 mr-11 mx-7 
+             rounded-xl bg-[#C58C34] hover:bg-[#b37c2e] 
+             active:scale-95 transition text-white font-medium shadow-md cursor-pointer'>
           <CirclePlus className='w-5 h-5'/>
           Create Post
         </Link>

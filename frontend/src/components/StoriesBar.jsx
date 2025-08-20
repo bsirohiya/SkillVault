@@ -40,9 +40,9 @@ function StoriesBar() {
 
         <div  className="flex gap-4 pb-5">
             {/* Add story card */}
-            <div onClick={ () => setShowModal(true)} className='rounded-lg shadow-sm min-w-30 max-w-30 max-h-40 aspect-[3/4] cursor-pointer hover:shadow-lg transition-all duration-200 border-2 border-dashed border-indigo-300 bg-gradient-to-b from-indigo-50 to-white'>
+            <div onClick={ () => setShowModal(true)} className='rounded-lg shadow-sm min-w-30 max-w-30 max-h-40 aspect-[3/4] cursor-pointer hover:shadow-lg transition-all duration-200 border-2 border-dashed border-gray-300 bg-gradient-to-b from-gray-50 to-white'>
                 <div  className='h-full flex flex-col items-center justify-center p-4'>
-                    <div className='size-10 bg-indigo-500 rounded-full flex items-center justify-center mb-3'>
+                    <div className='size-10 bg-gradient-to-r from-[#C58C34] to-[#d9a74a] rounded-full flex items-center justify-center mb-3'>
                         <Plus className="w-5 h-5 text-white"/>
                     </div>
                     <p className="text-sm font-medium text-slate-700 text-center">Create a story</p>    
@@ -54,13 +54,19 @@ function StoriesBar() {
 
             {
                 stories.map ( (story, index)=> (
-                    <div onClick={()=> setViewStory(story)}  key={index} className={`relative rounded-lg shadow min-w-30 max-w-30 max-h-40 cursor-pointer hover:shadow-lg transition-all duration-200 bg-gradient-to-b from-indigo-500 to-purple-600 hover:from-indigo-700 hover:to-purple-800 active:scale-95`}>
+                    <div onClick={()=> setViewStory(story)}  key={index} className={`relative rounded-lg shadow min-w-30 max-w-30 max-h-40 cursor-pointer hover:shadow-lg transition-all duration-200 active:scale-95`}
+                    style={{
+                        background:
+                        story.media_type === "text"
+                            ? story.background_color // keep user's chosen color for text
+                            : "transparent", // no background for media stories
+                    }}>
 
                         <img src={story.user.profile_picture} className= "absolute size-8 top-2 left-2 z-10 rounded-full ring ring-gray-100 shadow"/>
 
                         <p className="absolute top-18 left-3 text-white/60 text-sm truncate max-w-24">{story.content}</p>
 
-                        <p className="text-white absolute bottom-1 right-2 z-10 text-xs">{moment(story.createdAt).fromNow()}</p>
+                        <p className="absolute bottom-1 right-2 z-10 text-xs text-white px-1" style={{ backgroundColor: "rgba(0,0,0,0.2)", borderRadius: "2px" }}>{moment(story.createdAt).fromNow()}</p>
 
                         {
                             story.media_type !== "text" && (

@@ -121,7 +121,7 @@ function Connections() {
                           <div className='flex max-sm:flex-col gap-2 mt-4'>
 
                               {
-                                <button onClick={()=> navigate(`/profile/${user._id}`)} className='w-full p-2 text-sm rounded bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition text-white cursor-pointer'>View Profile</button>
+                                <button onClick={()=> navigate(`/profile/${user._id}`)} className='w-full p-2 text-sm rounded-md bg-gradient-to-r from-[#C58C34] to-[#d9a74a]    hover:from-[#b1752c] hover:to-[#c69d44] active:scale-95 transition text-white cursor-pointer'>View Profile</button>
                               }
 
                               {

@@ -2,6 +2,7 @@ import fs from "fs"
 import imagekit from "../configs/imageKit.js"
 import { Post } from "../models/Post.js"
 import { User } from "../models/User.js"
+import { error } from "console"
 
 
 // Add post
@@ -99,5 +100,105 @@ export const likePost = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.json({success: false, message: error.message})
+    }
+}
+
+
+// Delete post
+export const deletePost = async (req, res) => {
+    try {
+        const {userId} = req.auth()
+        const {postId} = req.params
+
+        const post = await Post.findById(postId)
+
+        if(!post){
+            return res.json({success: false, message:"Post not found" })
+        }
+
+        if(userId === post.user){
+            await Post.findByIdAndDelete(postId)
+            // await post.save()
+            return res.json({success: true, message: "Post deleted successfully"})
+        }else{
+            res.json({success: false, message: "Not authenticated"})
+        }
+    } catch (error) {
+        res.json({success: false, message: error.message})
+    }
+}
+
+// Save post
+export const savePost = async (req, res) => {
+    try {
+        const {userId} = req.auth()
+        const {postId} = req.body
+
+        const user = await User.findById(userId)
+        
+        if(!user){
+            return res.json({success: false, message: "Not authorized"})
+        }
+
+        if(user.savedPosts.includes(postId)){
+            user.savedPosts = user.savedPosts.filter((p)=> p.toString() !== postId)
+            await user.save()
+            return res.json({success: true, message: "Post unsaved"})
+        }else{
+            user.savedPosts.push(postId)
+            await user.save()
+            return res.json({success: true, message: "Post saved"})
+        }
+    } catch (error) {
+        res.json({success: false, message: error.message})
+    }
+}
+
+
+// get saved posts
+export const getSavedPosts = async (req, res) => {
+    try {
+        const { userId } = req.auth();
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.json({ success: false, message: "Not authenticated" });
+        }
+
+        const posts = await Post.find({
+            _id: { $in: user.savedPosts }
+        })
+        .populate("user")
+        .sort({ createdAt: -1 });
+
+        res.json({ success: true, posts });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+}
+
+
+// Search by hashtags
+export const searchByhashTags = async (req, res) => {
+    try {
+        const {tag} = req.query
+
+        if (!tag) return res.status(400).json({ success: false, message: "Hashtag required" })
+
+        const words = tag.trim().split(/\s+/);
+
+        const regex = words.map(word => new RegExp(`(^|\\s)#?${word}(?=\\s|$)`, "i"));
+        
+         const posts = await Post.find({
+            $or: regex.map(r => ({ content: { $regex: r } }))
+            })
+            .populate("user")
+            .sort({ createdAt: -1 });
+
+        res.json({ success: true, posts: posts || []})
+                            
+    } catch (error) {
+            res.status(500).json({ success: false, message: error.message })
     }
 }

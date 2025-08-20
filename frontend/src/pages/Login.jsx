@@ -10,7 +10,7 @@ function Login() {
       <img
         src={assets.bgImage}
         className="absolute inset-0 w-full h-full object-cover z-0"
-        style={{ opacity: 0.65 }}
+        style={{ opacity: 1  }}
       />
 
       {/* Optional faint overlay for readability */}
@@ -19,25 +19,27 @@ function Login() {
       {/* Left Side - Direct On-Screen Branding */}
       <div className="w-full md:w-7/12 flex flex-col justify-center items-start px-8 md:px-20 py-16 z-20">
 
-        {/* Bigger logo as part of the page */}
+        {/* Logo */}
         <img
           src={assets.logo}
           alt="SkillVault Logo"
-          className="w-52 md:w-64 mb-10 mt-2 select-none"
+          className="w-62 h-22.5 md:w-64 mb-10 mt-2  select-none"
           style={{
             filter: 'drop-shadow(0 2px 12px rgba(100,88,255,0.09))'
           }}
         />
 
         {/* Premium Headline & Subheadline */}
-        <h1 className="font-extrabold text-5xl md:text-6xl tracking-tight text-[#382466] mb-4 drop-shadow-xl leading-tight"
-            style={{ fontFamily: 'Inter,ui-sans-serif', letterSpacing: '-0.03em' }}>
-          Connect <span className="text-violet-600">beyond</span> just friends.
+        <h1 
+          className="font-extrabold text-5xl md:text-6xl tracking-tight text-[#1F1F1F] mb-4 drop-shadow-xl leading-tight"
+          style={{ fontFamily: 'Inter,ui-sans-serif', letterSpacing: '-0.03em' }}>
+          Unlock <span className="text-[#C58C34]">your growth</span> with SkillVault.
         </h1>
 
-        <p className="text-xl md:text-2xl text-[#958abb] font-medium mb-10 max-w-2xl leading-8"
-           style={{ fontFamily: 'Inter,ui-sans-serif' }}>
-          Join the <span className="font-bold text-violet-500">global SkillVault</span> community and grow with like-minded learners.
+        <p 
+          className="text-xl md:text-2xl text-gray-700 font-medium mb-10 max-w-2xl leading-8"
+          style={{ fontFamily: 'Inter,ui-sans-serif' }}>
+          Join the <span className="font-bold text-[#C58C34]">global SkillVault</span> community and grow with like-minded learners.
         </p>
 
         {/* Testimonial/Social proof as an inline badge, not a card */}
@@ -53,7 +55,7 @@ function Login() {
                 <Star key={i} size={20} fill="currentColor" />
               ))}
             </div>
-            <span className="text-sm text-violet-700 font-semibold tracking-wide">
+            <span className="text-sm text-[#1F1F1F] font-semibold tracking-wide">
               Used by 12,000+ learners
             </span>
           </div>
@@ -66,7 +68,7 @@ function Login() {
           <h2 className="text-2xl font-bold text-gray-800 text-center mb-7">Sign in to start building yourself</h2>
           <SignIn />
           <div className="mt-6 text-center text-xs text-gray-500">
-            No account? <span className="underline decoration-dotted decoration-purple-400 text-purple-600 cursor-pointer">Register now</span>
+            No account? <span className="underline decoration-dotted decoration-[#C58C34] text-[#C58C34] cursor-pointer">Register now</span>
           </div>
         </div>
       </div>

@@ -8,7 +8,17 @@ function StoryModal({setShowModal, fetchStories}) {
 
   const {getToken} = useAuth()
 
-    const bgColors = ["#4f46ef", "#7c3aed", "#db2777", "#e11d48", "#ca8a04", "#0d9488","#D2B48C", "#000000"]
+    const bgColors = [
+      "#4F46E5", // Royal Blue – bright yet refined
+      "#7C3AED", // Medium Violet – elegant pop
+      "#EC4899", // Hot Pink – bright but stylish
+      "#F97316", // Orange – warm and lively
+      "#14B8A6", // Teal – fresh and modern
+      "#22D3EE", // Cyan – subtle brightness
+      "#FBBF24", // Amber – cheerful, classy
+      "#000000"  // Indigo – soft but vivid
+    ];
+
 
     const [mode, setMode] = useState("text")
     const [bg, setBg] = useState(bgColors[0])
@@ -106,8 +116,8 @@ function StoryModal({setShowModal, fetchStories}) {
 
           {
             mode === "text" && (
-              <textarea onChange={ (e)=> setText(e.target.value)} value={text}  placeholder="What's on your mind?" 
-               className='bg-transparent text-white placeholder-white/60 w-full h-full p-6 text-lg resize-none focus:outline-none'
+              <textarea onChange={ (e)=> setText(e.target.value)} value={text} placeholder="What's on your mind?" 
+               className='bg-transparent text-shadow: 0 0 4px rgba(0,0,0,0.4) placeholder-white/60 w-full h-full p-6 text-lg resize-none focus:outline-none'
               />
             )
           }

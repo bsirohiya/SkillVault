@@ -36,7 +36,7 @@ export const addStory = async (req, res) => {
         // schedule story delete after 24 hours
         await inngest.send({
             name: "add/story-delete",
-            data: {storyId: story}
+            data: {storyId: story._id}
         })
         
         res.json({success: true})
@@ -58,9 +58,12 @@ export const getStories = async (req, res) => {
 
         const userIds = [userId, ...user.connections, ...user.following]
 
+        const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000)
         const stories = await Story.find({
-            user: {$in: userIds}
+            user: {$in: userIds},
+            createdAt: { $gte: cutoff }
         }).populate("user").sort({createdAt: -1})
+
         
         res.json({success: true, stories})
 

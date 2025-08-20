@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
+
     _id: {type: String, required: true},
     email: {type: String, required: true},
     full_name: {type: String, required: true},
@@ -12,6 +13,8 @@ const userSchema = new mongoose.Schema({
     followers: [{type: String, ref: 'User'}],
     following: [{type: String, ref: 'User'}],
     connections: [{type: String, ref: 'User'}],
+    savedPosts: [{type: mongoose.Schema.Types.ObjectId, ref: "Post"}]
+
 },{timestamps: true, minimize: false})
 
 export const User = mongoose.model("User", userSchema)

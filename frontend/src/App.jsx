@@ -17,6 +17,8 @@ import { fetchUser } from "./features/user/userSlice"
 import { fetchConnections } from "./features/connections/connectionsSlice"
 import { addMessages } from "./features/messages/messagesSlice"
 import Notification from "./components/Notification"
+import SavedPostsPage from "./pages/SavedPostsPage"
+import Search from "./pages/Search"
 
 function App() {
 
@@ -81,6 +83,8 @@ function App() {
             <Route path="profile" element={<Profile />}/>
             <Route path="profile/:profileId" element={<Profile />}/>
             <Route path="create-post" element={<CreatePost />}/>
+            <Route path="saved-posts" element={<SavedPostsPage />}/>
+            <Route path="search" element={<Search />}/>
         </Route>
       </Routes>
     </>

@@ -69,7 +69,7 @@ const syncUserDeletion = inngest.createFunction(
 // Inngest function to delete a story after 24 hours
 const deleteStory = inngest.createFunction(
     {id: "story-delete"},
-    {event: "app/story.delete"},
+    {event: "add/story-delete"},
 
     async ({event, step}) => {
         const {storyId} = event.data

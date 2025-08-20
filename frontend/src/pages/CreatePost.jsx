@@ -109,7 +109,11 @@ function CreatePost() {
                   error: <p>Post not Added</p>
                 },
                 setImages([])                
-              )} className='text-sm bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition text-white font-medium px-8 py-2 rounded-md cursor-pointer'>
+              )} className='text-sm font-medium px-8 py-2 rounded-md cursor-pointer
+             bg-gradient-to-r from-[#C58C34] to-[#d9a74a] 
+             hover:from-[#b57a2d] hover:to-[#c8953f]
+             active:scale-95 transition text-white
+             shadow-md disabled:opacity-50 disabled:cursor-not-allowed'>
                   Publish Post
               </button>
             </div>

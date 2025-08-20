@@ -9,12 +9,10 @@ function MenuItems({setSidebarOpen}) {
                 <NavLink key={to} to={to} end={ to === "/"} 
                   onClick={()=>setSidebarOpen(false)}
                   
-                  className={ ({isActive})=> `px-4 py-3 flex items-center gap-3 rounded-full ${isActive ? 'bg-indigo-50 text-indigo-700 text-lg':'hover:bg-gray-50'}`}
-                  >
-
+                  className={ ({isActive})=> `px-4 py-3 flex items-center gap-3 rounded-full mr-7 ${isActive ? 'bg-indigo-50 text-[#C58C34] text-xl':'hover:bg-gray-50'}`}>
+                    
                       <Icon className='w-5 h-5'/>
-                      {label}
-                      
+                      {label} 
                 </NavLink>
             ))
         }
