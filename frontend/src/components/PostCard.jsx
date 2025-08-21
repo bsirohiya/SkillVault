@@ -7,8 +7,12 @@ import { useSelector } from "react-redux"
 import { useAuth } from "@clerk/clerk-react"
 import { api } from "../api/axios"
 import toast from "react-hot-toast"
+import ImageModal from "./ImageModal"
 
 function PostCard({post, removePost}) {
+
+    const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+
 
     const {getToken} = useAuth()
 
@@ -24,19 +28,9 @@ function PostCard({post, removePost}) {
             
             const {data} = await api.post("/api/post/like", {postId: post._id}, {headers: {Authorization: `Bearer ${await getToken()}`}})
 
-            console.log(post);
-            
-
             if(data.success){
                 toast.success(data.message)
-                setLikes( prev => {
-
-                    if(prev.includes(currentUser._id)){
-                        return prev.filter(id => id !== currentUser._id)
-                    }else{
-                        return [...prev, currentUser._id]
-                    }
-                })
+                setLikes(data.likes_count);
             }else{
                 toast.error(data.message)
             }
@@ -81,6 +75,12 @@ function PostCard({post, removePost}) {
             toast.error(error.message)
         }
     }
+
+    const handleShare = () => {
+        const url = `${window.location.origin}/post/${post._id}`
+        navigator.clipboard.writeText(url)
+        toast.success("Post link copied to clipboard!")
+    }
     
   return (
     <div className='bg-white rounded-xl shadow p-4 space-y-4 w-full max-w-2xl'>
@@ -101,15 +101,18 @@ function PostCard({post, removePost}) {
       {/* content */}
       {post.content && <div className="text-gray-800 text-md whitespace-pre-line" dangerouslySetInnerHTML={{__html: postWithHashTags}}/>}
 
-      {/* Images */}
-      {<div className={`grid gap-2 ${post.image_urls.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
-            {post.image_urls.map( (img, index)=>(
-                <img src={img} key={index} 
-                className={`w-full rounded-lg object-cover ${post.image_urls.length === 1 ? 'h-auto' : 'h-48'}`}
+      {/* Horizontal Scroll for multiple images */}
+        <div className="flex overflow-x-auto gap-5 scrollbar-hide">
+            {post.image_urls.map((img, index) => (
+                <img
+                src={img}
+                key={index}
+                className="w-72 h-72 object-cover rounded-lg flex-shrink-0"
+                alt={`post-img-${index}`}
+                onClick={() => setSelectedImageIndex(index)}
                 />
             ))}
-      </div>}
-
+        </div>
       {/* Actions */}
 
         <div className='flex flex-wrap items-center gap-4 text-gray-600 text-sm pt-2 border-t border-gray-300'>
@@ -124,12 +127,12 @@ function PostCard({post, removePost}) {
 
             <div className='flex items-center gap-1 cursor-pointer'>
                 <MessageCircle className="w-4 h-4"/>
-                <span>{12}</span>
+                <span>{17}</span>
             </div>
 
-            <div className='flex items-center gap-1 cursor-pointer'>
+            <div onClick={handleShare} className='flex items-center gap-1 cursor-pointer'>
                 <Share2 className="w-4 h-4"/>
-                <span>{7}</span>
+                {/* <span>{7}</span> */}
             </div>
 
 
@@ -151,6 +154,17 @@ function PostCard({post, removePost}) {
 
 
         </div>
+
+        {/* IMAGE MODAL */}
+            {selectedImageIndex !== null && (
+                <ImageModal
+                images={post.image_urls}
+                initialIndex={selectedImageIndex}
+                onClose={() => setSelectedImageIndex(null)}
+                saved={saved}
+                onSave={handleSave}
+                />
+            )}
 
     </div>
   )

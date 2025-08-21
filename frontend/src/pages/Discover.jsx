@@ -60,8 +60,8 @@ function Discover() {
       <div className='max-w-6xl mx-auto p-6'>
 
           {/* Title */}
-            <div className='mb-8'>
-              <h1 className='text-3xl font-bold text-slate-900 mb-2'>Discover</h1>
+            <div className='mb-8 text-center'>
+              <h1 className='text-3xl font-bold bg-gradient-to-r from-[#C58C34] to-[#d9a74a] bg-clip-text text-transparent mb-2'>Discover</h1>
               <p className='text-slate-600'>Grow your skills and network by connecting people</p>
             </div>
 
@@ -80,7 +80,7 @@ function Discover() {
           </div>
 
           {/* Users List */}
-          <div className='flex flex-wrap gap-6'>
+          <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center'>
             {users.map((user)=> (
               <UserCard user={user} key={user._id}/>
             ))}

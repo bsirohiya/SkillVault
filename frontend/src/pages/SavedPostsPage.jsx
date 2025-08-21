@@ -12,8 +12,22 @@ function SavedPostsPage() {
       {/* Left gap */}
       <div className="hidden xl:block flex-1"></div>
 
+      
+
       {/* Center: Saved Posts */}
       <div className="w-full max-w-3xl flex flex-col items-start">
+
+        {/* Title */}
+        <div className="mb-1 text-center w-full">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-[#C58C34] to-[#d9a74a] bg-clip-text text-transparent mb-2">
+            Saved Posts
+          </h1>
+          <p className="text-slate-600">
+            Access all your bookmarked posts in one place
+          </p>
+        </div>
+
+
         <div className="p-4 space-y-6 w-full">
           <SavedPosts />
         </div>

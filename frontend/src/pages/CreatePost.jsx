@@ -20,9 +20,10 @@ function CreatePost() {
   const user = useSelector( (state)=> state.user.value)
 
   const handleSubmit = async () => {
-    if(!images && !content){
-      return toast.error("Please add something to post")
+    if (!content.trim() && images.length === 0) {
+      return toast.error("Please add something to post");
     }
+
 
     setLoading(true)
 
@@ -40,7 +41,10 @@ function CreatePost() {
       const {data} = await api.post("/api/post/add", formData, {headers: {Authorization: `Bearer ${await getToken()}`}})
 
       if(data.success){
-        navigate("/")
+        toast.success(data.success);
+        setContent("");      
+        setImages([]);       
+        navigate("/");
       }else{
         console.log(data.message);
         throw new Error(data.message)
@@ -60,13 +64,13 @@ function CreatePost() {
       <div className='max-w-6xl mx-auto p-6'>
 
           {/* Title */}
-            <div className='mb-8'>
-              <h1 className='text-3x1 font-bold text-slate-900 mb-2'>Create Post</h1>
+            <div className='mb-8 text-center'>
+              <h1 className='text-3xl font-bold bg-gradient-to-r from-[#C58C34] to-[#d9a74a] bg-clip-text text-transparent mb-2'>Create Post</h1>
               <p className='text-slate-600'>Share your experience to the world and help them to grow</p>
             </div>
 
           {/* Form */}
-          <div className='max-w-xl bg-white p-4 sm:p-8 sm:pb-3 rounded-x1 shadow-md space-y-4'>
+          <div className='max-w-xl bg-white p-4 sm:p-8 sm:pb-3 rounded-xl shadow-md space-y-4 '>
             {/* Header */}
             <div className='flex items-center gap-3'>
               <img src={user.profile_picture} alt="" className='w-12 h-12
@@ -101,21 +105,17 @@ function CreatePost() {
               </label>
               <input type="file" id="images" accept='image/*' hidden multiple onChange={(e)=>setImages([...images, ...e.target.files])}/>
 
-              <button disabled={loading} onClick={()=> toast.promise(
-                handleSubmit(),
-                {
-                  loading: "Uploading...",
-                  success: <p>Post Added</p>,
-                  error: <p>Post not Added</p>
-                },
-                setImages([])                
-              )} className='text-sm font-medium px-8 py-2 rounded-md cursor-pointer
-             bg-gradient-to-r from-[#C58C34] to-[#d9a74a] 
-             hover:from-[#b57a2d] hover:to-[#c8953f]
-             active:scale-95 transition text-white
-             shadow-md disabled:opacity-50 disabled:cursor-not-allowed'>
-                  Publish Post
+              <button
+                disabled={loading}
+                onClick={handleSubmit}
+                className="text-sm font-medium px-8 py-2 rounded-md cursor-pointer 
+                          bg-gradient-to-r from-[#C58C34] to-[#d9a74a] 
+                          hover:from-[#b57a2d] hover:to-[#c8953f] 
+                          active:scale-95 transition text-white shadow-md 
+                          disabled:opacity-50 disabled:cursor-not-allowed">
+                {loading ? "Publishing..." : "Publish Post"}
               </button>
+
             </div>
 
           </div>

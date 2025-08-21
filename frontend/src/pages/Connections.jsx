@@ -72,8 +72,8 @@ function Connections() {
       <div className='max-w-6xl mx-auto p-6'>
 
           {/* Title */}
-            <div className='mb-8'>
-              <h1 className='text-3x1 font-bold text-slate-900 mb-2'>Connections</h1>
+            <div className='text-center mb-8'>
+              <h1 className='text-4xl font-bold bg-gradient-to-r from-[#C58C34] to-[#d9a74a] bg-clip-text text-transparent'>Connections</h1>
               <p className='text-slate-600'>Manage your network and discover new connections</p>
             </div>
 
@@ -81,7 +81,7 @@ function Connections() {
               <div className='mb-8 flex flex-wrap gap-6'>
                 {dataArray.map( (item, index)=> (
 
-                  <div key={index} className='flex flex-col items-center justify-center gap-1 border h-20 w-40 border-gray-200 bg-white shadow rounded-md cursor-pointer'>
+                  <div key={index} className='flex flex-col items-center justify-center gap-2 border h-20 w-40 p-4 border-gray-200 bg-white shadow rounded-md cursor-pointer'>
                       <b>{item.value.length}</b>
                       <p className='text-slate-600'>{item.label}</p>
                   </div>
@@ -93,7 +93,7 @@ function Connections() {
                 <div className='inline-flex flex-wrap items-center border border-gray-200 rounded-md p-1 bg-white shadow-sm'>
                   {
                     dataArray.map( (tab)=> (
-                      <button onClick={()=> setCurrentTab(tab.label)} key={tab.label} className={`flex items-center px-3 py-1 text-sm rounded-md transition-colors cursor-pointer ${currentTab=== tab.label? 'bg-white font-medium text-black': 'text-gray-500 hover:text-black'}`}>
+                      <button onClick={()=> setCurrentTab(tab.label)} key={tab.label} className={`flex items-center px-4 py-2 text-sm rounded-md transition-colors cursor-pointer ${currentTab=== tab.label? 'bg-white font-medium text-black': 'text-gray-500 hover:text-black'}`}>
                         <tab.icon className='w-4 h-4'/>
                         <span className='ml-1'>{tab.label}</span>
 
