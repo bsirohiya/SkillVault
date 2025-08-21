@@ -21,7 +21,7 @@ export const menuItemsData = [
     { to: '/connections', label: 'Connections', Icon: Users },
     { to: '/discover', label: 'Discover', Icon: Search },
     { to: '/saved-posts', label: 'Saved', Icon: Bookmark },
-    { to: '/search', label: 'Search Users', Icon: Search },
+    { to: '/search', label: 'Search', Icon: Search },
     { to: '/profile', label: 'Profile', Icon: UserIcon },
 ];
 
