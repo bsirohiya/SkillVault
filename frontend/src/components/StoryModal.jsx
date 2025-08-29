@@ -9,13 +9,14 @@ function StoryModal({setShowModal, fetchStories}) {
   const {getToken} = useAuth()
 
     const bgColors = [
+      "#C58C34",
+      "#FBBF24", // Amber – cheerful, classy
+      "#F97316", // Orange – warm and lively
       "#4F46E5", // Royal Blue – bright yet refined
       "#7C3AED", // Medium Violet – elegant pop
       "#EC4899", // Hot Pink – bright but stylish
-      "#F97316", // Orange – warm and lively
       "#14B8A6", // Teal – fresh and modern
       "#22D3EE", // Cyan – subtle brightness
-      "#FBBF24", // Amber – cheerful, classy
       "#000000"  // Indigo – soft but vivid
     ];
 
@@ -163,8 +164,8 @@ function StoryModal({setShowModal, fetchStories}) {
           <button 
           onClick={()=> toast.promise(handleCreateStory(), { loading: "Saving.." }
           )}
-           className='flex items-center justify-center gap-2 text-white py-3 mt-4 w-full rounded bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition- cursor-pointer'>
-            <Sparkle size={18}/> Create Story
+           className='flex items-center justify-center gap-2 text-white py-3 mt-4 w-full rounded bg-gradient-to-r from-[#b2762b] to-[#C58C34] hover:from-[#8c5d22] hover:to-[#a86e28]  active:scale-95 transition- cursor-pointer'>
+            <Sparkle size={18}/> Create Story   
           </button>
       </div>
     </div>

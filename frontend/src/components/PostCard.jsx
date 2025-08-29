@@ -1,6 +1,5 @@
 import {BadgeCheck, Bookmark, BookMarked, Heart, MessageCircle, Save, Share2, Trash} from "lucide-react"
 import moment from "moment"
-import { dummyUserData } from "../assets/assets"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
@@ -83,7 +82,7 @@ function PostCard({post, removePost}) {
     }
     
   return (
-    <div className='bg-white rounded-xl shadow p-4 space-y-4 w-full max-w-2xl'>
+    <div className='bg-white rounded-xl shadow p-4 space-y-4 w-full sm:w-full md:max-w-2xl'>
 
         {/* User Info */}
         <div onClick={()=> navigate("/profile/" + post.user._id)} className='inline-flex items-center gap-3 cursor-pointer'>
@@ -107,7 +106,7 @@ function PostCard({post, removePost}) {
                 <img
                 src={img}
                 key={index}
-                className="w-72 h-72 object-cover rounded-lg flex-shrink-0"
+                className="w-full max-w-xs sm:max-w-sm md:max-w-md h-72 object-cover rounded-lg cursor-pointer"
                 alt={`post-img-${index}`}
                 onClick={() => setSelectedImageIndex(index)}
                 />
