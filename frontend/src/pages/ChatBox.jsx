@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { dummyMessagesData, dummyUserData } from '../assets/assets'
 import { ImageIcon, SendHorizonal } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '@clerk/clerk-react'
 import { api } from '../api/axios'
 import { addMessages, fetchMessages, resetMessages } from '../features/messages/messagesSlice.js'
@@ -14,6 +13,7 @@ function ChatBox() {
   const {userId} = useParams()
   const {getToken} = useAuth()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const[user, setUser] = useState(null)
   const [image, setImage] = useState(null)
@@ -73,13 +73,12 @@ function ChatBox() {
   },[connections, userId])
 
   useEffect(()=>{
-    messageEndRef.current?.scrollIntoView({behaviour: "smooth"})
+    messageEndRef.current?.scrollIntoView({behavior: "smooth"})
   }, [messages])
 
   return user && (
     <div className='flex flex-col h-screen'>
-      <div className='flex items-center gap-2 p-2 mb-10 mt-1 md:px-10 xl:pl-42
-      bg-gradient-to-r from-indigo-50 to-purple-50 border-b border-gray-300'>
+      <div onClick={()=> navigate(`/profile/${userId}`)} className='flex items-center gap-2 p-2 mb-10 mt-1 cursor-pointer md:px-10 xl:pl-42 bg-gradient-to-r from-indigo-50 to-purple-50 border-b border-gray-300 sticky top-0 z-10'>
         <img src={user.profile_picture} alt="" className="size-8 rounded-full mr-2"/>
         <div>
           <p className="font-medium mb-1">{user.full_name}</p>
@@ -87,7 +86,7 @@ function ChatBox() {
         </div>
       </div>
 
-      <div className='pd-5 md:px-10 h-full overflow-y-scroll'>
+      <div className='flex-1 overflow-y-auto px-5 md:px-10'>
         <div className='space-y-4 max-w-4xl mx-auto'>
           {
             messages.toSorted((a,b)=> new Date(a.createdAt) - new Date(b.
@@ -109,7 +108,7 @@ function ChatBox() {
         </div>
       </div>
 
-      <div className='px-4'>
+      <div className='px-4 sticky bottom-0 z-10'>
         <div className='flex items-center gap-3 pl-5 p-1.5 bg-white w-full
         max-w-xl mx-auto border border-gray-200 shadow rounded-full mb-5'>
 

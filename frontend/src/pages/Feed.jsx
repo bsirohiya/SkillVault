@@ -45,7 +45,7 @@ function Feed() {
   }
 
   return !loading ? (
-    <div className="h-full overflow-y-auto no-scrollbar py-4 mt-3 flex justify-center items-start gap-8 px-4 ">
+    <div className="h-full overflow-x-hidden overflow-y-auto no-scrollbar py-4 mt-3 flex justify-center items-start gap-8 px-4 ">
 
       {/* Left gap */}
       <div className="hidden xl:block flex-1"></div>
